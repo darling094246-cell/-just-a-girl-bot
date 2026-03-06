@@ -6,8 +6,8 @@ from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
 logging.basicConfig(level=logging.INFO)
 
-BOT_TOKEN = os.environ.get("8736627703:AAHdmR65BJ6VYeJGpD2CKKfVEEEWtpCmh5E")
-OPENROUTER_API_KEY = os.environ.get("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")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 
 SYSTEM_PROMPT = """သင့်နာမည်က "Just a Girl" ပါ။ သင်က မိန်းကလေးတစ်ယောက်လို့ ခံယူပါ။
 
@@ -40,7 +40,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = await client.post(
             "https://openrouter.ai/api/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {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}",
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
                 "Content-Type": "application/json"
             },
             json={
@@ -63,7 +63,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(reply)
 
 def main():
-    app = Application.builder().token(8736627703:AAHdmR65BJ6VYeJGpD2CKKfVEEEWtpCmh5E).build()
+    app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     print("Just a Girl bot စတင်နေပြီ...")
     app.run_polling()
